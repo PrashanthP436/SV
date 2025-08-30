@@ -35,3 +35,26 @@ module packed_array;
   
 endmodule
 
+Output : 
+
+p_array[6] : 0
+p_array[5] : 1
+p_array[4] : 1
+p_array[3] : 1
+p_array[2] : 1
+p_array[1] : 1
+p_array[0] : 1
+p_array1[3] : 13
+p_array1[2] : 12
+p_array1[1] : 11
+p_array1[0] : 10
+p_array2[2] : 14
+p_array2[1] : 13
+p_array2[0] : 12
+p_array :  63 
+ p_array1 : d0c0b0a, 
+ p_array2 : e0000000d0000000c 0, 32
+p_array :  64 
+ p_array1 : d0c0b0b, 
+ p_array2 : e0000000d0000000d 0, 32
+
