@@ -10,6 +10,9 @@ module packed_array;
   reg  [2:0] [3:0] [7:0] p_array2; // Vector of 3, 32 bit sub vectors(4 (8 bit sub vectors)). order is left to right([2:0] -> [3:0] -> [7:0]) for read or write
   
   initial begin
+    $display("============ Before Initialization =================");
+    $display("p_array : %0p, p_array1 : %0p, p_array2 : %0p",p_array,p_array1,p_array2);
+    
     p_array = 'h3f;
     
     $display("============ Packed Array 1D =================");
@@ -34,14 +37,33 @@ module packed_array;
     $display("p_array : %d \n p_array1 : %0h, \n p_array2 : %0h %0d, %0d",p_array,p_array1,p_array2,p_array1[2][7:4],$bits(p_array2[1]));
     p_array++;p_array1++;p_array2++;  // Packed Arrays are treated as integral values. so increment is valid
     $display("p_array : %d \n p_array1 : %0h, \n p_array2 : %0h %0d, %0d",p_array,p_array1,p_array2,p_array1[2][7:4],$bits(p_array2[1]));
-    $display("======================================================");
+    
+    $display("============== Access Out Of Bound ==================");
+    // OOB (Out Of Bound) writes and reads will give warnings only
+    p_array2[1][13] = 'd10;  // write
+    $display("p_array2[%0d] : %0d (Out Of Bound read gives default datatype value)",10,p_array2[10]); // read
     
   end
-    
+  
 endmodule
 
 Output :
 
+Warning-[SIOB] Select index out of bounds
+testbench.sv, 41
+"p_array2[1][13]"
+  The select index is out of declared bounds : [3:0].
+  In module : packed_array.
+
+
+Warning-[SIOB] Select index out of bounds
+testbench.sv, 42
+"p_array2[10]"
+  The select index is out of declared bounds : [2:0].
+  In module : packed_array.
+    
+============ Before Initialization =================
+p_array : x, p_array1 : 0, p_array2 : x
 ============ Packed Array 1D =================
 p_array[6] : 0
 p_array[5] : 1
@@ -87,4 +109,6 @@ p_array :  63
 p_array :  64 
  p_array1 : d0c0b0b, 
  p_array2 : e0000000d0000000d 0, 32
-======================================================
+============== Access Out Of Bound ==================
+p_array2[10] : x (Out Of Bound read gives default datatype value)
+           V C S   S i m u l a t i o n   R e p o r t 
